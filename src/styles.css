@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/resources/styles/index.css";
+@import "~materialize-css/dist/css/materialize.css";
+@import "~material-icons/iconfont/material-icons.css";
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.light-green-background {
+  background-color: #9fe4d3;
+}
+
+.dark-green-text {
+  color: #00634a;
+}
+

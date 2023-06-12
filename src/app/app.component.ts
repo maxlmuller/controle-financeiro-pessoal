@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'controle-financeiro-pessoal';
+  hideBalance = false;
+  public saldo;
+  constructor() {
+    this.saldo = "R$ 190,00";
+  }
+
+  ngOnInit(): void {}
 }
