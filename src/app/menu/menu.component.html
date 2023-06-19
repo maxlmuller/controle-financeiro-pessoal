@@ -1,14 +1,18 @@
 <!-- menu -->
-<nav>
+<div class="navbar-fixed" style="z-index: 1001 !important">
+  <nav>
   <div class="nav-wrapper light-green-background">
-    <a class="brand-logo" href="#">
-      <img class="my-logo" src="assets/resources/images/logo.png" />
-    </a>
-    <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a class=dark-green-text href="balance.html">Saldo</a></li>
-      <li><a class=dark-green-text href="income.html">Receitas</a></li>
-      <li><a class=dark-green-text href="outcome.html">Despesas</a></li>
-    </ul>
+      <div class="container">
+      <a class="brand-logo" href="#">
+        <img class="my-logo" src="assets/resources/images/logo.png" />
+      </a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a routerLink="/saldo" class=dark-green-text>Saldo</a></li>
+        <li><a routerLink="/receitas" class=dark-green-text>Receitas</a></li>
+        <li><a routerLink="/despesas" class=dark-green-text>Despesas</a></li>
+      </ul>
+    </div>
   </div>
-</nav>
+  </nav>
+</div>
 <!-- fim menu -->
