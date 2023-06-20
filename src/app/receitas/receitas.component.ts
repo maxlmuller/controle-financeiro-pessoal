@@ -8,14 +8,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ReceitasComponent implements OnInit{
   valor: string;
+  hideNull = false;
 
   constructor(private route: ActivatedRoute) {
     this.valor = '';
   }
 
   ngOnInit() {
-    const valorParametro = this.route.snapshot.paramMap.get('valor');
-    this.valor = valorParametro !== null ? valorParametro : '';
+    this.route.queryParams.subscribe(params => {
+      this.valor = params['valor'];
+      if (this.valor === undefined || this.valor === null || this.valor === '') {
+        this.hideNull = true;
+      }
+    });
   }
-
 }

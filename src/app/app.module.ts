@@ -8,6 +8,8 @@ import { FooterComponent } from './footer/footer.component';
 import { SaldoComponent } from './saldo/saldo.component';
 import { ReceitasComponent } from './receitas/receitas.component';
 import { DespesasComponent } from './despesas/despesas.component';
+import { PainelSaldoComponent } from './painel-saldo/painel-saldo.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { DespesasComponent } from './despesas/despesas.component';
     FooterComponent,
     SaldoComponent,
     ReceitasComponent,
-    DespesasComponent
+    DespesasComponent,
+    PainelSaldoComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

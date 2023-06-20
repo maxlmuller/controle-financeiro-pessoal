@@ -1,0 +1,9 @@
+<div class="row">
+  <div
+    class="col s12 m12 card-panel dark-green-text"
+    id="div-panel"
+    [ngClass]="this.backgroundColor"
+  >
+    {{ this.saldo | currency: "BRL":true }}
+  </div>
+</div>

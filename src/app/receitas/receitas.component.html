@@ -1,2 +1,2 @@
-<p class="container contact">receitas works!</p>
-<p>Valor: {{ valor }}</p>
+<h4 class="container contact" >Receitas:</h4>
+<h5 class="container contact " [hidden]="this.hideNull">Receita no valor de {{valor | currency: "BRL":true }} foi adicionada!</h5>
