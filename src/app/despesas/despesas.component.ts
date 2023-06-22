@@ -1,25 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { Despesa } from '../model/despesa';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-despesas',
   templateUrl: './despesas.component.html',
   styleUrls: ['./despesas.component.css']
 })
-export class DespesasComponent implements OnInit{
-  valor: string;
+export class DespesasComponent{
+  @ViewChild('despesaForm') despesaForm!: NgForm;
   hideNull = false;
 
-  constructor(private route: ActivatedRoute) {
-    this.valor = '';
-  }
+  descricao!: string;
+  valor!: string;
+  despesas: Despesa[] = [];
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.valor = params['valor'];
-      if (this.valor === undefined || this.valor === null || this.valor === '') {
-        this.hideNull = true;
-      }
-    });
+    const despesasSalvas = localStorage.getItem('despesas');
+    if (despesasSalvas) {
+      this.despesas = JSON.parse(despesasSalvas);
+    }
+  }
+
+  adicionarDespesa() {
+    const despesa = new Despesa(this.descricao, parseFloat(this.valor));
+    this.despesas.push(despesa);
+    localStorage.setItem('despesas', JSON.stringify(this.despesas));
+
+    this.descricao = '';
+    this.valor = '';
+    this.despesaForm.resetForm();
+  }
+
+  calcularTotalDespesas(): number {
+    return this.despesas.reduce((total, despesa) => total + despesa.valor, 0);
   }
 }

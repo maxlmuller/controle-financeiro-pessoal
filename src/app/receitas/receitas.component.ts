@@ -1,25 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { Receita } from '../model/receita';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
   styleUrls: ['./receitas.component.css']
 })
-export class ReceitasComponent implements OnInit{
-  valor: string;
+export class ReceitasComponent{
+  @ViewChild('receitaForm') receitaForm!: NgForm;
   hideNull = false;
 
-  constructor(private route: ActivatedRoute) {
-    this.valor = '';
-  }
+  descricao!: string;
+  valor!: string;
+  receitas: Receita[] = [];
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      this.valor = params['valor'];
-      if (this.valor === undefined || this.valor === null || this.valor === '') {
-        this.hideNull = true;
-      }
-    });
+    const receitasSalvas = localStorage.getItem('receitas');
+    if (receitasSalvas) {
+      this.receitas = JSON.parse(receitasSalvas);
+    }
+  }
+
+  adicionarReceita() {
+    const receita = new Receita(this.descricao, parseFloat(this.valor));
+    this.receitas.push(receita);
+    localStorage.setItem('receitas', JSON.stringify(this.receitas));
+
+    this.descricao = '';
+    this.valor = '';
+    this.receitaForm.resetForm();
+  }
+
+  calcularTotalReceitas(): number {
+    return this.receitas.reduce((total, receita) => total + receita.valor, 0);
   }
 }

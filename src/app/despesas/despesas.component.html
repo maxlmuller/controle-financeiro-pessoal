@@ -1,2 +1,48 @@
-<h4 class="container contact" >Despesas:</h4>
-<h5 class="container contact" [hidden]="this.hideNull">Despesa no valor de {{valor | currency: "BRL":true }} foi adicionada!</h5>
+<h4 class="container contact" >Despesas</h4>
+<div class="container contact">
+  <h5>Cadastro de Despesas</h5>
+<form (ngSubmit)="adicionarDespesa()" #despesaForm="ngForm">
+  <div>
+    <label for="descricao">Descrição:</label>
+    <input
+      type="text"
+      id="descricao"
+      name="descricao"
+      autocomplete="off"
+      [(ngModel)]="descricao"
+      pattern="^[a-zA-Z0-9\s]{2,50}$"
+      required
+    >
+  </div>
+  <div class="red-text" *ngIf="despesaForm.controls['descricao'].invalid && despesaForm.controls['descricao'].touched">
+    Erro: A descrição é obrigatória e deve conter entre 2 e 50 caracteres.
+  </div>
+  <div>
+    <label for="valor">Valor (R$):</label>
+    <input
+      type="text"
+      id="valor"
+      name="valor"
+      autocomplete="off"
+      [(ngModel)]="valor"
+      pattern="^[0-9]+(?:\.[0-9]{1,2})?$"
+      required
+    >
+  </div>
+  <div class="red-text" *ngIf="despesaForm.controls['valor'].invalid && despesaForm.controls['valor'].touched">
+    Erro: Utilize apenas números e ponto para separar os centavos.
+  </div>
+  <button type="submit" [disabled]="!despesaForm.valid">Enviar</button>
+</form>
+  <h5>Lista de Despesas | Total de Despesas: {{ calcularTotalDespesas() | currency: "BRL": true }}</h5>
+<table>
+  <tr>
+    <th>Descrição</th>
+    <th>Valor</th>
+  </tr>
+  <tr *ngFor="let despesa of despesas">
+    <td>{{ despesa.descricao }}</td>
+    <td>{{ despesa.valor }}</td>
+  </tr>
+</table>
+</div>
