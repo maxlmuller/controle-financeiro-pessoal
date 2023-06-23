@@ -1,0 +1,22 @@
+{
+  "movimentacoes": [
+    {
+      "descricao": "Canoinhas",
+      "valor": 10,
+      "tipo": "despesa",
+      "id": 1
+    },
+    {
+      "descricao": "aaa",
+      "valor": "111",
+      "tipo": "despesa",
+      "id": 2
+    },
+    {
+      "descricao": "333",
+      "valor": "1",
+      "tipo": "despesa",
+      "id": 3
+    }
+  ]
+}
