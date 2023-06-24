@@ -1,6 +1,16 @@
-<h4 class="container contact" >Receitas</h4>
+<br><h4 class="container contact" >Receitas</h4>
 <div class="container contact">
   <h5>Cadastro de Receitas</h5>
+
+<div
+  id="div-mensagem-receita"
+  class="card-panel white-text"
+  [hidden]="!this.mensagemReceita"
+  [class.red]="this.erroReceita"
+  [class.green]="!this.erroReceita"
+>
+  {{ this.mensagemReceita }}
+</div>
 <form (ngSubmit)="adicionarReceita()" #receitaForm="ngForm">
   <div>
     <label for="descricao">Descrição:</label>
@@ -10,7 +20,7 @@
       name="descricao"
       autocomplete="off"
       [(ngModel)]="descricao"
-      pattern="^[a-zA-Z0-9\s]{2,50}$"
+      pattern="^[a-zA-Z0-9\sÀ-ÿ]{2,50}$"
       required
     >
   </div>
@@ -34,15 +44,18 @@
   </div>
   <button type="submit" [disabled]="!receitaForm.valid">Enviar</button>
 </form>
-  <h5>Lista de Receitas | Total de Receitas: {{ calcularTotalReceitas() | currency: "BRL": true }}</h5>
 <table>
+  <tr>
+    <th><h5>Lista de Receitas</h5></th>
+    <th><h5>Total de Receitas: {{ calcularTotalReceitas() | currency: "BRL": true }}</h5></th>
+  </tr>
   <tr>
     <th>Descrição</th>
     <th>Valor</th>
   </tr>
   <tr *ngFor="let receita of receitas">
     <td>{{ receita.descricao }}</td>
-    <td>{{ receita.valor }}</td>
+    <td>{{ receita.valor | currency: "BRL": true }}</td>
   </tr>
 </table>
 </div>

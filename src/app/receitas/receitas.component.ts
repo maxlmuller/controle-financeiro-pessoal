@@ -1,38 +1,59 @@
 import { Component, ViewChild } from '@angular/core';
-import { Receita } from '../model/receita';
 import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Movimentacao } from '../model/movimentacao';
 
 @Component({
   selector: 'app-receitas',
   templateUrl: './receitas.component.html',
   styleUrls: ['./receitas.component.css']
 })
-export class ReceitasComponent{
+export class ReceitasComponent {
   @ViewChild('receitaForm') receitaForm!: NgForm;
   hideNull = false;
 
   descricao!: string;
-  valor!: string;
-  receitas: Receita[] = [];
+  valor!: number;
+  receitas: Movimentacao[] = [];
+  erroReceita = false;
+  mensagemReceita = '';
+
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
-    const receitasSalvas = localStorage.getItem('receitas');
-    if (receitasSalvas) {
-      this.receitas = JSON.parse(receitasSalvas);
-    }
+    this.atualizarListaReceitas();
+  }
+
+  atualizarListaReceitas() {
+    this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=receita').subscribe(data => {
+      this.receitas = data;
+    });
   }
 
   adicionarReceita() {
-    const receita = new Receita(this.descricao, parseFloat(this.valor));
-    this.receitas.push(receita);
-    localStorage.setItem('receitas', JSON.stringify(this.receitas));
+    const receita = { descricao: this.descricao, valor: this.valor, tipo: 'receita' };
+    fetch('http://localhost:3000/movimentacoes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(receita)
+    })
+      .then(() => {
+        this.erroReceita = false;
+        this.mensagemReceita = 'Receita cadastrada com sucesso!';
+        this.atualizarListaReceitas();
+      })
+      .catch((error) => {
+        this.erroReceita = true;
+        this.mensagemReceita = 'Erro ao cadastrar receita!';
+      });
 
-    this.descricao = '';
-    this.valor = '';
     this.receitaForm.resetForm();
   }
 
   calcularTotalReceitas(): number {
-    return this.receitas.reduce((total, receita) => total + receita.valor, 0);
+    return this.receitas.reduce((total, movimentacao) => total + +movimentacao.valor, 0);
   }
 }

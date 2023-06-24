@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { Despesa } from '../model/despesa';
 import { NgForm } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Movimentacao } from '../model/movimentacao';
 
 @Component({
   selector: 'app-despesas',
@@ -10,16 +12,23 @@ import { NgForm } from '@angular/forms';
 export class DespesasComponent{
   @ViewChild('despesaForm') despesaForm!: NgForm;
   hideNull = false;
-
+  
   descricao!: string;
-  valor!: string;
-  despesas: Despesa[] = [];
+  valor!: number;
+  despesas: Movimentacao[] = [];
+  erroDespesa = false;
+  mensagemDespesa = '';
+
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
-    const despesasSalvas = localStorage.getItem('despesas');
-    if (despesasSalvas) {
-      this.despesas = JSON.parse(despesasSalvas);
-    }
+    this.atualizarListaDespesas()
+  }
+
+  atualizarListaDespesas() {
+  this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=despesa').subscribe(data => {
+    this.despesas = data;
+  });
   }
 
   adicionarDespesa() {
@@ -32,23 +41,19 @@ export class DespesasComponent{
       body: JSON.stringify(despesa)
     })
       .then(() => {
-        console.log('Despesa cadastrada com sucesso!');
-        // Redirecionar para a página de saldo ou atualizar a lista de despesas, se necessário
+        this.erroDespesa = false;
+        this.mensagemDespesa = 'Despesa cadastrada com sucesso!';
+        this.atualizarListaDespesas()
       })
-      .catch(error => {
-        console.error('Erro ao cadastrar despesa:', error);
+      .catch((error) => {
+        this.erroDespesa = true;
+        this.mensagemDespesa = 'Erro ao cadastrar despesa!';
       });
 
-/*     const despesa = new Despesa(this.descricao, parseFloat(this.valor));
-    this.despesas.push(despesa);
-    localStorage.setItem('despesas', JSON.stringify(this.despesas)); */
-
-    this.descricao = '';
-    this.valor = '';
     this.despesaForm.resetForm();
   }
 
   calcularTotalDespesas(): number {
-    return this.despesas.reduce((total, despesa) => total + despesa.valor, 0);
+    return this.despesas.reduce((total, movimentacao) => total + +movimentacao.valor, 0);
   }
 }

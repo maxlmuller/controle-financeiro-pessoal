@@ -1,6 +1,16 @@
-<h4 class="container contact" >Despesas</h4>
+<br><h4 class="container contact" >Despesas</h4>
 <div class="container contact">
   <h5>Cadastro de Despesas</h5>
+
+<div
+  id="div-mensagem-despesa"
+  class="card-panel white-text"
+  [hidden]="!this.mensagemDespesa"
+  [class.red]="this.erroDespesa"
+  [class.green]="!this.erroDespesa"
+>
+  {{ this.mensagemDespesa }}
+</div>
 <form (ngSubmit)="adicionarDespesa()" #despesaForm="ngForm">
   <div>
     <label for="descricao">Descrição:</label>
@@ -10,7 +20,7 @@
       name="descricao"
       autocomplete="off"
       [(ngModel)]="descricao"
-      pattern="^[a-zA-Z0-9\s]{2,50}$"
+      pattern="^[a-zA-Z0-9\sÀ-ÿ]{2,50}$"
       required
     >
   </div>
@@ -34,15 +44,18 @@
   </div>
   <button type="submit" [disabled]="!despesaForm.valid">Enviar</button>
 </form>
-  <h5>Lista de Despesas | Total de Despesas: {{ calcularTotalDespesas() | currency: "BRL": true }}</h5>
 <table>
+  <tr>
+    <th><h5>Lista de Despesas</h5></th>
+    <th><h5>Total de Despesas: {{ calcularTotalDespesas() | currency: "BRL": true }}</h5></th>
+  </tr>
   <tr>
     <th>Descrição</th>
     <th>Valor</th>
   </tr>
   <tr *ngFor="let despesa of despesas">
     <td>{{ despesa.descricao }}</td>
-    <td>{{ despesa.valor }}</td>
+    <td>{{ despesa.valor | currency: "BRL": true }}</td>
   </tr>
 </table>
 </div>

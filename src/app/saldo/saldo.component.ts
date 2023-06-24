@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Movimentacao } from '../model/movimentacao';
 
 @Component({
   selector: 'app-saldo',
   templateUrl: './saldo.component.html',
   styleUrls: ['./saldo.component.css']
 })
-export class SaldoComponent {
+export class SaldoComponent implements OnInit {
 
   hideBalance = false;
   modal = {
@@ -15,16 +16,11 @@ export class SaldoComponent {
     title: '',
     text: '',
   };
+  receitas: Movimentacao[] = [];
+  despesas: Movimentacao[] = [];
+  saldo!: number;
 
-  constructor(private router: Router) {}
-
-  passarParaReceitas() {
-    this.router.navigate(['/receitas'], { queryParams: { valor: '100' } });
-  }
-
-  passarParaDespesas() {
-    this.router.navigate(['/despesas'], { queryParams: { valor: '100' } });
-  }
+  constructor(private router: Router, private http: HttpClient) {}
 
   onInvestmentsEvent(event: boolean) {
     this.modal.show = event;
@@ -34,5 +30,27 @@ export class SaldoComponent {
 
   onCloseModal() {
     this.modal.show = false;
+  }
+
+  ngOnInit() {
+    this.fetchMovimentacoes('receita', (data) => {
+      this.receitas = data;
+      this.calcularSaldo();
+    });
+
+    this.fetchMovimentacoes('despesa', (data) => {
+      this.despesas = data;
+      this.calcularSaldo();
+    });
+  }
+
+  fetchMovimentacoes(tipo: string, callback: (data: Movimentacao[]) => void): void {
+    this.http.get<Movimentacao[]>(`http://localhost:3000/movimentacoes?tipo=${tipo}`).subscribe(callback);
+  }
+
+  calcularSaldo(): void {
+    const totalReceitas = this.receitas.reduce((total, movimentacao) => total + +movimentacao.valor, 0);
+    const totalDespesas = this.despesas.reduce((total, movimentacao) => total + +movimentacao.valor, 0);
+    this.saldo = totalReceitas - totalDespesas;
   }
 }

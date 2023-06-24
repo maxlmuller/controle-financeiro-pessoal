@@ -11,6 +11,7 @@ import { ReceitasComponent } from './receitas/receitas.component';
 import { DespesasComponent } from './despesas/despesas.component';
 import { PainelSaldoComponent } from './painel-saldo/painel-saldo.component';
 import { ModalComponent } from './modal/modal.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ModalComponent } from './modal/modal.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

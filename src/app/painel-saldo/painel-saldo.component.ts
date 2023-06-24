@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-painel-saldo',
@@ -23,7 +16,7 @@ export class PainelSaldoComponent implements OnInit, OnChanges{
     if (this.saldo > 1000)
       setTimeout(() => {
         this.investmentsEvent.emit(true);
-      }, 2000);
+      }, 4000);
   }
 
   ngOnInit(): void {}
