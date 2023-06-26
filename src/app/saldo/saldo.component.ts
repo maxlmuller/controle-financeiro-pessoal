@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Movimentacao } from '../model/movimentacao';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-saldo',
@@ -33,19 +34,19 @@ export class SaldoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchMovimentacoes('receita', (data) => {
+    this.fetchMovimentacoes('receita').subscribe(data => {
       this.receitas = data;
       this.calcularSaldo();
     });
 
-    this.fetchMovimentacoes('despesa', (data) => {
+    this.fetchMovimentacoes('despesa').subscribe(data => {
       this.despesas = data;
       this.calcularSaldo();
     });
   }
 
-  fetchMovimentacoes(tipo: string, callback: (data: Movimentacao[]) => void): void {
-    this.http.get<Movimentacao[]>(`http://localhost:3000/movimentacoes?tipo=${tipo}`).subscribe(callback);
+  fetchMovimentacoes(tipo: string): Observable<Movimentacao[]> {
+    return this.http.get<Movimentacao[]>(`http://localhost:3000/movimentacoes?tipo=${tipo}`);
   }
 
   calcularSaldo(): void {

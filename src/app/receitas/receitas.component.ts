@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movimentacao } from '../model/movimentacao';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-receitas',
@@ -22,13 +23,13 @@ export class ReceitasComponent {
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
-    this.atualizarListaReceitas();
-  }
-
-  atualizarListaReceitas() {
-    this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=receita').subscribe(data => {
+    this.atualizarListaReceitas().subscribe(data => {
       this.receitas = data;
     });
+  }
+
+  atualizarListaReceitas(): Observable<Movimentacao[]> {
+    return this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=receita');
   }
 
   adicionarReceita() {
@@ -43,7 +44,9 @@ export class ReceitasComponent {
       .then(() => {
         this.erroReceita = false;
         this.mensagemReceita = 'Receita cadastrada com sucesso!';
-        this.atualizarListaReceitas();
+        this.atualizarListaReceitas().subscribe(data => {
+          this.receitas = data;
+        });
       })
       .catch((error) => {
         this.erroReceita = true;

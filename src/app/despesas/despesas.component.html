@@ -47,7 +47,7 @@
 <table>
   <tr>
     <th><h5>Lista de Despesas</h5></th>
-    <th><h5>Total de Despesas: {{ calcularTotalDespesas() | currency: "BRL": true }}</h5></th>
+    <th><h5>Total de Despesas: {{ calcularTotalDespesas() | currency: "BRL" }}</h5></th>
   </tr>
   <tr>
     <th>Descrição</th>
@@ -55,7 +55,7 @@
   </tr>
   <tr *ngFor="let despesa of despesas">
     <td>{{ despesa.descricao }}</td>
-    <td>{{ despesa.valor | currency: "BRL": true }}</td>
+    <td>{{ despesa.valor | currency: "BRL" }}</td>
   </tr>
 </table>
 </div>

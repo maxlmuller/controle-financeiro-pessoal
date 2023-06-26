@@ -29,6 +29,18 @@
       "valor": "2150.10",
       "tipo": "despesa",
       "id": 5
+    },
+    {
+      "descricao": "223",
+      "valor": "23.25",
+      "tipo": "receita",
+      "id": 6
+    },
+    {
+      "descricao": "adwad",
+      "valor": "23",
+      "tipo": "receita",
+      "id": 7
     }
   ]
 }

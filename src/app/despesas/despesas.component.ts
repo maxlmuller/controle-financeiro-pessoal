@@ -3,32 +3,33 @@ import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movimentacao } from '../model/movimentacao';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-despesas',
   templateUrl: './despesas.component.html',
   styleUrls: ['./despesas.component.css']
 })
-export class DespesasComponent{
+export class DespesasComponent {
   @ViewChild('despesaForm') despesaForm!: NgForm;
   hideNull = false;
-  
+
   descricao!: string;
   valor!: number;
   despesas: Movimentacao[] = [];
   erroDespesa = false;
   mensagemDespesa = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
-    this.atualizarListaDespesas()
+    this.atualizarListaDespesas().subscribe(data => {
+      this.despesas = data;
+    });
   }
 
-  atualizarListaDespesas() {
-  this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=despesa').subscribe(data => {
-    this.despesas = data;
-  });
+  atualizarListaDespesas(): Observable<Movimentacao[]> {
+    return this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=despesa');
   }
 
   adicionarDespesa() {
@@ -43,7 +44,9 @@ export class DespesasComponent{
       .then(() => {
         this.erroDespesa = false;
         this.mensagemDespesa = 'Despesa cadastrada com sucesso!';
-        this.atualizarListaDespesas()
+        this.atualizarListaDespesas().subscribe(data => {
+          this.despesas = data;
+        });
       })
       .catch((error) => {
         this.erroDespesa = true;
