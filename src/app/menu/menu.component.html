@@ -1,33 +1,30 @@
 <!-- menu -->
-
-<!--   <nav>
-  <div class="nav-wrapper light-green-background">
-      <div class="container">
-      <a class="brand-logo" href="#">
-        <img class="my-logo" src="assets/resources/images/logo.png" />
-      </a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a routerLink="/saldo" class=dark-green-text>Saldo</a></li>
-        <li><a routerLink="/receitas" class=dark-green-text>Receitas</a></li>
-        <li><a routerLink="/despesas" class=dark-green-text>Despesas</a></li>
-      </ul>
-    </div>
-  </div>
-  </nav> -->
   <div class="navbar-fixed" style="z-index: 1001 !important">
   <nav>
-    <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
+    <div class="nav-wrapper light-green-background">
+      <div class="container">
+      <a href="#!" class="brand-logo"><img class="my-logo" src="assets/resources/images/logo.png" /></a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a routerLink="/saldo" class=dark-green-text>Saldo</a></li>
         <li><a routerLink="/receitas" class=dark-green-text>Receitas</a></li>
         <li><a routerLink="/despesas" class=dark-green-text>Despesas</a></li>
       </ul>
+      </div>
     </div>
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
+    <div class="row">
+      <div class="col s8 offset-s2">
+        <div class="center">
+          <img
+            class="circle responsive-img"
+            src="assets/resources/images/logo.png"
+          />
+        </div>
+      </div>
+    </div>
     <li><a routerLink="/saldo" class=dark-green-text>Saldo</a></li>
     <li><a routerLink="/receitas" class=dark-green-text>Receitas</a></li>
     <li><a routerLink="/despesas" class=dark-green-text>Despesas</a></li>

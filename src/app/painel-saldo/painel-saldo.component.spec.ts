@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PainelSaldoComponent } from './painel-saldo.component';
 
 describe('PainelSaldoComponent', () => {

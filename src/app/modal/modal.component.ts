@@ -4,7 +4,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -23,7 +22,7 @@ interface ModalContent {
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css'],
 })
-export class ModalComponent implements OnInit, OnChanges {
+export class ModalComponent implements OnChanges {
   @Input() content?: ModalContent;
   @Input() show: boolean = false;
   @Output() closeEvent = new EventEmitter<boolean>();
@@ -41,6 +40,4 @@ export class ModalComponent implements OnInit, OnChanges {
   onClose() {
     this.closeEvent.emit(false);
   }
-
-  ngOnInit(): void {}
 }

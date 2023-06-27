@@ -1,14 +1,12 @@
 <br><h4 class="container contact" >Receitas</h4>
 <div class="container contact">
   <h5>Cadastro de Receitas</h5>
-
 <div
   id="div-mensagem-receita"
   class="card-panel white-text"
   [hidden]="!this.mensagemReceita"
   [class.red]="this.erroReceita"
-  [class.green]="!this.erroReceita"
->
+  [class.green]="!this.erroReceita">
   {{ this.mensagemReceita }}
 </div>
 <form (ngSubmit)="adicionarReceita()" #receitaForm="ngForm">
@@ -22,7 +20,7 @@
       [(ngModel)]="descricao"
       pattern="^[a-zA-Z0-9\sÀ-ÿ]{2,50}$"
       required
-    >
+      >
   </div>
   <div class="red-text" *ngIf="receitaForm.controls['descricao'].invalid && receitaForm.controls['descricao'].touched">
     Erro: A descrição é obrigatória e deve conter entre 2 e 50 caracteres.

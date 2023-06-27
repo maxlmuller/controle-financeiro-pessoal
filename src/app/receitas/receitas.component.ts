@@ -1,9 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Movimentacao } from '../model/movimentacao';
-import { Observable } from 'rxjs';
+import { ReceitasService } from './receitas.service';
 
 @Component({
   selector: 'app-receitas',
@@ -20,38 +18,38 @@ export class ReceitasComponent {
   erroReceita = false;
   mensagemReceita = '';
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) {}
+  constructor(
+    private receitasService: ReceitasService
+  ) {}
 
   ngOnInit() {
-    this.atualizarListaReceitas().subscribe(data => {
+    this.atualizarListaReceitas();
+  }
+
+  atualizarListaReceitas() {
+    this.receitasService.atualizarListaReceitas().subscribe(data => {
       this.receitas = data;
     });
   }
 
-  atualizarListaReceitas(): Observable<Movimentacao[]> {
-    return this.http.get<Movimentacao[]>('http://localhost:3000/movimentacoes?tipo=receita');
-  }
-
   adicionarReceita() {
-    const receita = { descricao: this.descricao, valor: this.valor, tipo: 'receita' };
-    fetch('http://localhost:3000/movimentacoes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(receita)
-    })
-      .then(() => {
+    const receita: Movimentacao = {
+      descricao: this.descricao,
+      valor: this.valor,
+      tipo: 'receita'
+    };
+
+    this.receitasService.adicionarReceita(receita).subscribe({
+      next: () => {
         this.erroReceita = false;
         this.mensagemReceita = 'Receita cadastrada com sucesso!';
-        this.atualizarListaReceitas().subscribe(data => {
-          this.receitas = data;
-        });
-      })
-      .catch((error) => {
+        this.atualizarListaReceitas();
+      },
+      error: () => {
         this.erroReceita = true;
         this.mensagemReceita = 'Erro ao cadastrar receita!';
-      });
+      }
+    });
 
     this.receitaForm.resetForm();
   }

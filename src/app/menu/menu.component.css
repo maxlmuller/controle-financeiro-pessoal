@@ -1,3 +1,13 @@
 .my-logo {
   height: 56px;
+  margin: 7% auto;
+}
+
+.material-icons {
+  color: #00634a;
+}
+
+.sidenav {
+  background-color: #9fe4d3;
+  width: 200px;
 }

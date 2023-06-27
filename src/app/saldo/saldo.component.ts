@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Movimentacao } from '../model/movimentacao';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-saldo',
@@ -34,24 +35,22 @@ export class SaldoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetchMovimentacoes('receita').subscribe(data => {
-      this.receitas = data;
-      this.calcularSaldo();
-    });
-
-    this.fetchMovimentacoes('despesa').subscribe(data => {
-      this.despesas = data;
-      this.calcularSaldo();
+    forkJoin([
+      this.fetchMovimentacoes('receita'),
+      this.fetchMovimentacoes('despesa')
+    ]).pipe(
+      map(([receitas, despesas]) => {
+        this.receitas = receitas;
+        this.despesas = despesas;
+        return [receitas.reduce((total, movimentacao) => total + +movimentacao.valor, 0),
+                despesas.reduce((total, movimentacao) => total + +movimentacao.valor, 0)];
+      })
+    ).subscribe(([totalReceitas, totalDespesas]) => {
+      this.saldo = totalReceitas - totalDespesas;
     });
   }
 
   fetchMovimentacoes(tipo: string): Observable<Movimentacao[]> {
     return this.http.get<Movimentacao[]>(`http://localhost:3000/movimentacoes?tipo=${tipo}`);
-  }
-
-  calcularSaldo(): void {
-    const totalReceitas = this.receitas.reduce((total, movimentacao) => total + +movimentacao.valor, 0);
-    const totalDespesas = this.despesas.reduce((total, movimentacao) => total + +movimentacao.valor, 0);
-    this.saldo = totalReceitas - totalDespesas;
   }
 }
