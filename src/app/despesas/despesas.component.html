@@ -42,7 +42,9 @@
   <div class="red-text" *ngIf="despesaForm.controls['valor'].invalid && despesaForm.controls['valor'].touched">
     Erro: Utilize apenas números e ponto para separar os centavos.
   </div>
-  <button type="submit" [disabled]="!despesaForm.valid">Enviar</button>
+  <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!despesaForm.valid">Enviar
+    <i class="material-icons right">send</i>
+  </button>
 </form>
 <table>
   <tr>
