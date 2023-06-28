@@ -1,0 +1,7 @@
+<app-modal [show]="modal.show" [content]="modal" (closeEvent)="onCloseModal()">
+</app-modal>
+<div id="painel-saldo" class="container contact"  [hidden]="this.hideBalance">
+   <h5>Saldo do Mês:</h5>
+   <app-painel-saldo [saldo]=saldo (investmentsEvent)="this.onInvestmentsEvent($event)"></app-painel-saldo>
+   <br>
+</div>

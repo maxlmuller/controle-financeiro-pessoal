@@ -1,0 +1,28 @@
+@import "assets/resources/styles/index.css";
+@import "~materialize-css/dist/css/materialize.css";
+@import "~material-icons/iconfont/material-icons.css";
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+.light-red-background {
+  background-color: #ff9e9e;
+  color:#660000;
+}
+
+.light-green-background {
+  background-color: #9fe4d3;
+  color: #00634a;
+}
+
+.dark-green-text {
+  color: #00634a;
+  font-size: 20px;
+}

@@ -1,0 +1,61 @@
+<br><h4 class="container contact" >Receitas</h4>
+<div class="container contact">
+  <h5>Cadastro de Receitas</h5>
+<div
+  id="div-mensagem-receita"
+  class="card-panel white-text"
+  [hidden]="!this.mensagemReceita"
+  [class.red]="this.erroReceita"
+  [class.green]="!this.erroReceita">
+  {{ this.mensagemReceita }}
+</div>
+<form (ngSubmit)="adicionarReceita()" #receitaForm="ngForm">
+  <div>
+    <label for="descricao">Descrição:</label>
+    <input
+      type="text"
+      id="descricao"
+      name="descricao"
+      autocomplete="off"
+      [(ngModel)]="descricao"
+      pattern="^[a-zA-Z0-9\sÀ-ÿ]{2,50}$"
+      required
+      >
+  </div>
+  <div class="red-text" *ngIf="receitaForm.controls['descricao'].invalid && receitaForm.controls['descricao'].touched">
+    Erro: A descrição é obrigatória e deve conter entre 2 e 50 caracteres.
+  </div>
+  <div>
+    <label for="valor">Valor (R$):</label>
+    <input
+      type="text"
+      id="valor"
+      name="valor"
+      autocomplete="off"
+      [(ngModel)]="valor"
+      pattern="^[0-9]+(?:\.[0-9]{1,2})?$"
+      required
+    >
+  </div>
+  <div class="red-text" *ngIf="receitaForm.controls['valor'].invalid && receitaForm.controls['valor'].touched">
+    Erro: Utilize apenas números e ponto para separar os centavos.
+  </div>
+  <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!receitaForm.valid">Enviar
+    <i class="material-icons right">send</i>
+  </button>
+</form>
+<table>
+  <tr>
+    <th><h5>Lista de Receitas</h5></th>
+    <th><h5>Total de Receitas: {{ calcularTotalReceitas() | currency: "BRL" }}</h5></th>
+  </tr>
+  <tr>
+    <th>Descrição</th>
+    <th>Valor</th>
+  </tr>
+  <tr *ngFor="let receita of receitas">
+    <td>{{ receita.descricao }}</td>
+    <td>{{ receita.valor | currency: "BRL" }}</td>
+  </tr>
+</table>
+</div>

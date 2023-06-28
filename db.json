@@ -1,0 +1,34 @@
+{
+  "movimentacoes": [
+    {
+      "descricao": "Salário",
+      "valor": "3000",
+      "tipo": "receita",
+      "id": 1
+    },
+    {
+      "descricao": "Venda Notebook",
+      "valor": "2000",
+      "tipo": "receita",
+      "id": 2
+    },
+    {
+      "descricao": "Serviços de Streaming",
+      "valor": "39.90",
+      "tipo": "despesa",
+      "id": 3
+    },
+    {
+      "descricao": "Supermercado",
+      "valor": "560",
+      "tipo": "despesa",
+      "id": 4
+    },
+    {
+      "descricao": "Cartão de Crédito",
+      "valor": "2150.10",
+      "tipo": "despesa",
+      "id": 5
+    }
+  ]
+}

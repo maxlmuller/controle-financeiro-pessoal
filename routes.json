@@ -1,0 +1,4 @@
+{
+  "/movimentacoes/tipo/:t": "/movimentacoes?tipo=:t",
+  "/movements/tipo/:t": "/movimentacoes?tipo=:t"
+}
