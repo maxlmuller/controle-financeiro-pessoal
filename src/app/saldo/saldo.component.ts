@@ -21,6 +21,8 @@ export class SaldoComponent implements OnInit {
   receitas: Movimentacao[] = [];
   despesas: Movimentacao[] = [];
   saldo!: number;
+  valorReceita!: number;
+  valorDespesa!: number;
 
   constructor(private router: Router, private http: HttpClient) {}
 
@@ -52,5 +54,13 @@ export class SaldoComponent implements OnInit {
 
   fetchMovimentacoes(tipo: string): Observable<Movimentacao[]> {
     return this.http.get<Movimentacao[]>(`http://localhost:3000/movimentacoes?tipo=${tipo}`);
+  }
+
+  enviarReceita() {
+    this.router.navigate(['/receitas', this.valorReceita]);
+  }
+
+  enviarDespesa() {
+    this.router.navigate(['/despesas', this.valorDespesa]);
   }
 }

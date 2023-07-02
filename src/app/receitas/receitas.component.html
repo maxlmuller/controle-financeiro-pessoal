@@ -28,7 +28,7 @@
   <div>
     <label for="valor">Valor (R$):</label>
     <input
-      type="text"
+      type="number"
       id="valor"
       name="valor"
       autocomplete="off"
@@ -38,7 +38,7 @@
     >
   </div>
   <div class="red-text" *ngIf="receitaForm.controls['valor'].invalid && receitaForm.controls['valor'].touched">
-    Erro: Utilize apenas números e ponto para separar os centavos.
+    Erro: O valor é obrigatório e deve conter no máximo 2 casas decimais.
   </div>
   <button class="btn waves-effect waves-light" type="submit" name="action" [disabled]="!receitaForm.valid">Enviar
     <i class="material-icons right">send</i>

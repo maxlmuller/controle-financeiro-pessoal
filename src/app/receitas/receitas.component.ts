@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Movimentacao } from '../model/movimentacao';
 import { ReceitasService } from './receitas.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-receitas',
@@ -19,11 +20,15 @@ export class ReceitasComponent {
   mensagemReceita = '';
 
   constructor(
-    private receitasService: ReceitasService
+    private receitasService: ReceitasService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.atualizarListaReceitas();
+    this.route.params.subscribe(params => {
+      this.valor = +params['valor'];
+    });
   }
 
   atualizarListaReceitas() {

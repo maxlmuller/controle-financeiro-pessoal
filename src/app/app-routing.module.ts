@@ -10,7 +10,6 @@ const routes: Routes = [
   { path: 'saldo', component: SaldoComponent },
   { path: 'receitas', component: ReceitasComponent },
   { path: 'despesas', component: DespesasComponent },
-  { path: 'saldo/:valor', component: SaldoComponent },
   { path: 'receitas/:valor', component: ReceitasComponent },
   { path: 'despesas/:valor', component: DespesasComponent }
 ];

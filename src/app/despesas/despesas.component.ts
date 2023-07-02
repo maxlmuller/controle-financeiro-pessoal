@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Movimentacao } from '../model/movimentacao';
 import { DespesasService } from './despesas.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-despesas',
@@ -19,11 +20,15 @@ export class DespesasComponent {
   mensagemDespesa = '';
 
   constructor(
-    private despesasService: DespesasService
+    private despesasService: DespesasService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.atualizarListaDespesas();
+    this.route.params.subscribe(params => {
+      this.valor = +params['valor'];
+    });
   }
 
   atualizarListaDespesas() {

@@ -3,5 +3,36 @@
 <div id="painel-saldo" class="container contact"  [hidden]="this.hideBalance">
    <h5>Saldo do Mês:</h5>
    <app-painel-saldo [saldo]=saldo (investmentsEvent)="this.onInvestmentsEvent($event)"></app-painel-saldo>
-   <br>
+   <form #cadastroRapido="ngForm">
+      <h5>Cadastro Rápido de Receitas</h5>
+      <input 
+      type="number"
+      name="valorReceita"
+      [(ngModel)]="valorReceita"
+      placeholder="Digite um valor para a receita"
+      pattern="^[0-9]+(?:\.[0-9]{1,2})?$"
+      required>
+      <div class="red-text" *ngIf="cadastroRapido.controls['valorReceita'].invalid && cadastroRapido.controls['valorReceita'].touched">
+         Erro: O valor é obrigatório e deve conter no máximo 2 casas decimais.
+       </div>
+      <button class="btn waves-effect waves-light" (click)="enviarReceita()" [disabled]="!cadastroRapido.controls['valorReceita'].valid">Enviar
+         <i class="material-icons right">send</i>
+      </button>
+      <br><br>
+      <h5>Cadastro Rápido de Despesas</h5>
+      <input
+      type="number"
+      name="valorDespesa"
+      [(ngModel)]="valorDespesa"
+      placeholder="Digite um valor para a despesa"
+      pattern="^[0-9]+(?:\.[0-9]{1,2})?$"
+      required>
+      <div class="red-text" *ngIf="cadastroRapido.controls['valorDespesa'].invalid && cadastroRapido.controls['valorDespesa'].touched">
+         Erro: O valor é obrigatório e deve conter no máximo 2 casas decimais.
+       </div>
+      <button class="btn waves-effect waves-light" (click)="enviarDespesa()" [disabled]="!cadastroRapido.controls['valorDespesa'].valid">Enviar
+         <i class="material-icons right">send</i>
+      </button>
+   </form>
+   <br><br>
 </div>
