@@ -9,6 +9,9 @@ https://maxlmuller.github.io/controle-financeiro-pessoal/
 ## Protótipo
 https://www.figma.com/file/jFKVn3mAP7Q7ur3PKiJkgB/Controle-Financeiro-Pessoal
 
+## Relatório de Apresentação
+https://github.com/maxlmuller/controle-financeiro-pessoal/blob/main/Relat%C3%B3rio%20de%20Apresenta%C3%A7%C3%A3o.pdf
+
 ##  Checklist
 
 - [X]  Criar o repositório no GitHub com a estrutura do Gitflow, ou seja, branches main e develop.
